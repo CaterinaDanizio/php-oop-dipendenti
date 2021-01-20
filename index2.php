@@ -169,7 +169,8 @@
 				return parent:: __toString()
                 . '<b>Department</b>: ' . $this -> getCompanyDep() . '<br>'
                 . '<b>Team</b>: ' . $this -> getCompanyTeam() . '<br>'
-                . '<b>Seniority</b>: ' . $this -> getSeniority() . '<br>';
+                . '<b>Seniority</b>: ' . $this -> getSeniority() . '<br>'
+                . '<b>Employees</b>:<br>' . $this -> getEmpsStr() . '<br>';
 			}
 
             public function setCompanyDep($department) {
@@ -204,6 +205,28 @@
                 $this -> securyLvl = $securyLvl;
             }
 
+            public function getEmployees() {
+                    
+                    return $this -> employees;
+                    }
+            
+            public function setEmployees($employees) {
+                    if(count($employees) < 1) {
+                    $e6 = new Exception('No employees in the array');
+                    throw $e6;
+                } 
+                        $this -> employees = $employees;
+                    }
+
+            private function getEmpsStr() {
+                        $str = '';
+                        for ($x=0;$x<count($this -> getEmployees());$x++) {
+                            $emp = $this -> getEmployees()[$x];
+                            $fullname = $emp -> getName() . ' ' . $emp -> getLastname();
+                            $str .= ($x + 1) . ': ' . $fullname . '<br>';
+                        }
+                        return $str;
+                    }                    
         }
 
 
@@ -215,7 +238,12 @@
              $employee = new Employee ('Laura', 'Bianchi', 'Trieste', 1981, 4, 'Unipol', 'Office Assistant', 17.000); 
             echo '<h1>Employee:</h1> <br><br>' . $employee . '<br>';
 
-            $boss = new Boss ('Michele', 'Zonca', 'Milano', 1965, 7, 'Prisma', 'Marketing Manager', 100.000, 'Marketing', 'B2C', '25 years');
+            $boss = new Boss ('Michele', 'Zonca', 'Milano', 1965, 7, 'Prisma', 'Marketing Manager', 100.000, 'Marketing', 'B2C', '25 years', [
+                        $employee,
+                        $employee,
+                        $employee,
+                        $employee,
+                    ]);
             echo '<h1>Boss:</h1> <br><br>' . $boss . '<br>';    
             } 
 
@@ -236,6 +264,10 @@
             
         catch(Exception $e5) {
             echo "Error: RAL for employees is between 10.000 and 100.000 <br>";
+            }
+
+        catch(Exception $e6) {
+            echo "Error: every boss must have at least a employee <br>";
             }
 
             
