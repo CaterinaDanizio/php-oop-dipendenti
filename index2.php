@@ -37,7 +37,7 @@
             public function setName($name) {
 
                 if (strlen($name) < 3) {
-                     $e1 = new Exception('at least 3 characters for the name');
+                     $e1 = new Exception('Attention, at least 3 characters for the name');
                      throw $e1;
                     }
 				
@@ -50,7 +50,7 @@
 
             public function setLastname($lastname) {
                 if (strlen($lastname) < 3) {
-                    $e2 = new Exception('at least 3 characters for the lastname');
+                    $e2 = new Exception('Attention, at least 3 characters for the lastname');
                      throw $e2;
                     }
 				
@@ -105,7 +105,7 @@
 				return parent:: __toString()
                 . '<b>Company</b>: ' . $this -> getCompany() . '<br>'
                 . '<b>Role</b>: ' . $this -> getCompanyRole() . '<br>'
-                . '<b>Ral</b>: ' . $this -> getRal() . '<br>';
+                . '<b>Ral</b>: ' . $this -> getRal() . 'K' . '<br>';
 			}
 
             
@@ -127,7 +127,7 @@
 
             public function setRal($ral) {
                 if($ral < 10.000 || $ral > 100.000) {
-                   $e5 = new Exception('Ral between 10.000 and 100.000 for employees');
+                   $e5 = new Exception('Ral range must be between 10.000 and 100.000 for employees');
                     throw $e5; 
                 }
 				$this -> ral = $ral;
@@ -139,7 +139,7 @@
 
             public function setSecurity($securyLvl) {
                 if($securyLvl < 1 || $securyLvl > 5) {
-                    $e3 = new Exception('security level for employee between 1 and 5');
+                    $e3 = new Exception('Security level for employees must be between 1 and 5');
                     throw $e3;
                 }
                 
@@ -199,7 +199,7 @@
 
             public function setSecurity($securyLvl) {
                 if($securyLvl < 6) {
-                    $e4 = new Exception('security level for boss between 6 and 10');
+                    $e4 = new Exception('Security level for boss must be between 6 and 10');
                     throw $e4;
                 }       
                 $this -> securyLvl = $securyLvl;
@@ -212,7 +212,7 @@
             
             public function setEmployees($employees) {
                     if(count($employees) < 1) {
-                    $e6 = new Exception('No employees in the array');
+                    $e6 = new Exception('Every boss must have at least an employee');
                     throw $e6;
                 } 
                         $this -> employees = $employees;
@@ -235,7 +235,7 @@
             $person = new Person ('Sara', 'Rossi', 'Sesto San Giovanni', 1991, 1);
                 echo '<h1>Persona:</h1> <br><br>' . $person . '<br>';   
             
-             $employee = new Employee ('Laura', 'Bianchi', 'Trieste', 1981, 4, 'Unipol', 'Office Assistant', 17.000); 
+             $employee = new Employee ('Laura', 'Bianchi', 'Trieste', 1981, 1, 'Unipol', 'Office Assistant', 17.000); 
             echo '<h1>Employee:</h1> <br><br>' . $employee . '<br>';
 
             $boss = new Boss ('Michele', 'Zonca', 'Milano', 1965, 7, 'Prisma', 'Marketing Manager', 100.000, 'Marketing', 'B2C', '25 years', [
@@ -246,28 +246,28 @@
                     ]);
             echo '<h1>Boss:</h1> <br><br>' . $boss . '<br>';    
             } 
+        catch (Exception  $e1) {
+            echo $e1 -> getMessage();
+            } 
+
+        catch (Exception  $e2) {
+            echo $e2 -> getMessage();
+            } 
 
         catch(Exception $e3) {
-            echo "Error: security level for employee is between 1 and 5 <br>";
+            echo $e3 -> getMessage();
             } 
 
         catch(Exception $e4) {
-            echo "Error: security level for boss is between 6 and 10 <br>";
+            echo $e4 -> getMessage();
         }
-        
-        catch (Exception  $e1) {
-            echo "Error: at least 3 characters for name!<br>";
-            } 
-        catch (Exception  $e2) {
-            echo "Error: at least 3 characters for lastname!<br>";
-            } 
             
         catch(Exception $e5) {
-            echo "Error: RAL for employees is between 10.000 and 100.000 <br>";
+            echo $e5 -> getMessage();
             }
 
         catch(Exception $e6) {
-            echo "Error: every boss must have at least a employee <br>";
+            echo $e6 -> getMessage();
             }
 
             
